@@ -660,7 +660,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     _statusBarOriginallyHidden = [UIApplication sharedApplication].statusBarHidden;
     
     // Update UI
-	[self hideControlsAfterDelay];
+//	[self hideControlsAfterDelay];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1129,7 +1129,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
 	// Hide controls when dragging begins
-	[self setControlsHidden:YES animated:YES permanent:NO];
+	[self setControlsHidden:NO animated:YES permanent:YES];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -1221,8 +1221,8 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 }
 
 - (BOOL)areControlsHidden { return (_toolbar.alpha == 0); }
-- (void)hideControls      { if(_autoHide) [self setControlsHidden:YES animated:YES permanent:NO]; }
-- (void)toggleControls    { [self setControlsHidden:![self areControlsHidden] animated:YES permanent:NO]; }
+- (void)hideControls      { if(_autoHide) [self setControlsHidden:YES animated:YES permanent:YES]; }
+- (void)toggleControls    { [self setControlsHidden:![self areControlsHidden] animated:YES permanent:YES]; }
 
 
 #pragma mark - Properties
