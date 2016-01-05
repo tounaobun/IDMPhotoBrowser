@@ -35,6 +35,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 	
     // Buttons
     UIButton *_doneButton;
+    UIButton *_downloadButton;
     
     // Labels
     UILabel *_counterLabel;
@@ -131,7 +132,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 @implementation IDMPhotoBrowser
 
 // Properties
-@synthesize displayDoneButton = _displayDoneButton, displayToolbar = _displayToolbar, displayActionButton = _displayActionButton, displayCounterLabel = _displayCounterLabel, useWhiteBackgroundColor = _useWhiteBackgroundColor, doneButtonImage = _doneButtonImage;
+@synthesize displayToolbar = _displayToolbar, displayActionButton = _displayActionButton, useWhiteBackgroundColor = _useWhiteBackgroundColor, doneButtonImage = _doneButtonImage, downloadButtonImage = _downloadButtonImage;
 @synthesize actionButtonTitles = _actionButtonTitles;
 @synthesize arrowButtonsChangePhotosAnimated = _arrowButtonsChangePhotosAnimated;
 @synthesize forceHideStatusBar = _forceHideStatusBar;
@@ -158,12 +159,11 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         _initalPageIndex = 0;
         _autoHide = YES;
         
-        _displayDoneButton = YES;
         _doneButtonImage = nil;
+        _downloadButtonImage = nil;
         
         _displayToolbar = YES;
         _displayActionButton = YES;
-        _displayCounterLabel = NO;
         
         _forceHideStatusBar = NO;
         _usePopAnimation = NO;
@@ -606,6 +606,16 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         _doneButton.contentMode = UIViewContentModeScaleAspectFit;
     }
     
+    // Download Button
+    _downloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_downloadButton setAlpha:1.0f];
+    [_downloadButton addTarget:self action:@selector(downloadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    if (_downloadButtonImage) {
+        [_downloadButton setFrame:CGRectMake(self.view.center.x - _downloadButtonImage.size.width / 2, self.view.frame.size.height - 150, _downloadButtonImage.size.width, _downloadButtonImage.size.height)];
+        [_downloadButton setBackgroundImage:_downloadButtonImage forState:UIControlStateNormal];
+        _downloadButton.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    
     // Counter Label
     _counterLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width - 100) / 2, 34, 100, 17)];
     [_counterLabel setAlpha:1.0f];
@@ -666,6 +676,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     _recycledPages = nil;
     _toolbar = nil;
     _doneButton = nil;
+    _downloadButton = nil;
     _counterLabel = nil;
     
     [super viewDidUnload];
@@ -716,6 +727,9 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     // Counter Label
     // TODO:
     
+    // Download Button
+    // TODO:
+    
     // Remember index
 	NSUInteger indexPriorToLayout = _currentPageIndex;
 	
@@ -764,9 +778,15 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     }
     
     // Close button
-    if(_displayDoneButton && !self.navigationController.navigationBar)
+    if (!self.navigationController.navigationBar)
         [self.view addSubview:_doneButton];
     
+    // Download button
+    if (_downloadButtonImage) {
+        [self.view addSubview:_downloadButton];
+    }
+    
+    // Counter label
     if (!self.navigationController.navigationBar) {
         [self.view addSubview:_counterLabel];
     }
@@ -1170,6 +1190,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         [self.navigationController.navigationBar setAlpha:alpha];
         [_toolbar setAlpha:alpha];
         [_doneButton setAlpha:alpha];
+        [_downloadButton setAlpha:alpha];
         [_counterLabel setAlpha:alpha];
         for (UIView *v in captionViews) v.alpha = alpha;
     } completion:^(BOOL finished) {}];
@@ -1229,6 +1250,11 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
         [self prepareForClosePhotoBrowser];
         [self dismissPhotoBrowserAnimated:YES];
     }
+}
+
+- (void)downloadButtonPressed:(id)sender {
+
+    NSLog(@"download button pressed!");
 }
 
 - (void)actionButtonPressed:(id)sender {

@@ -32,14 +32,13 @@
 
 // Toolbar customization
 @property (nonatomic) BOOL displayToolbar;
-@property (nonatomic) BOOL displayCounterLabel;
 @property (nonatomic) BOOL displayActionButton;
 @property (nonatomic, strong) NSArray *actionButtonTitles;
 
 // View customization
-@property (nonatomic) BOOL displayDoneButton;
 @property (nonatomic) BOOL useWhiteBackgroundColor;
 @property (nonatomic, weak) UIImage *doneButtonImage;
+@property (nonatomic, weak) UIImage *downloadButtonImage;
 @property (nonatomic, weak) UIColor *trackTintColor, *progressTintColor;
 
 @property (nonatomic, weak) UIImage *scaleImage;

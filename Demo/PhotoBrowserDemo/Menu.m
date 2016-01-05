@@ -111,11 +111,11 @@
     IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotos:photos animatedFromView:sender]; // using initWithPhotos:animatedFromView: method to use the zoom-in animation
     browser.delegate = self;
     browser.displayActionButton = NO;
-    browser.displayCounterLabel = YES;
     browser.usePopAnimation = YES;
     browser.scaleImage = buttonSender.currentImage;
     if(buttonSender.tag == 102) browser.useWhiteBackgroundColor = YES;
     browser.doneButtonImage         = [UIImage imageNamed:@"close-white"];
+    browser.downloadButtonImage = [UIImage imageNamed:@"stillDownload"];
     // Show
     [self presentViewController:browser animated:YES completion:nil];
 }
@@ -228,13 +228,11 @@
     {
         if(indexPath.row == 1) // Photos from Flickr
         {
-            browser.displayCounterLabel = YES;
             browser.displayActionButton = NO;
         }
         else if(indexPath.row == 2) // Photos from Flickr - Custom
         {
             browser.actionButtonTitles      = @[@"Option 1", @"Option 2", @"Option 3", @"Option 4"];
-            browser.displayCounterLabel     = YES;
             browser.useWhiteBackgroundColor = YES;
             browser.view.tintColor          = [UIColor orangeColor];
             browser.progressTintColor       = [UIColor orangeColor];
@@ -242,6 +240,7 @@
         }
     }
     browser.doneButtonImage         = [UIImage imageNamed:@"close-white"];
+    browser.downloadButtonImage = [UIImage imageNamed:@"stillDownload"];
     // Show
     [self presentViewController:browser animated:YES completion:nil];
     
